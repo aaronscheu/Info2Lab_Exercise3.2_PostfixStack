@@ -65,7 +65,7 @@ public class LinkedList<Item> {
 
         Node temp = last;
         if (last == null || counter == 0) {
-            throw new StackUnderflowException();
+            throw new StackUnderflowException("Stack is empty!");
         } else {
             last = last.getPrevious();
             last.setNext(null);

@@ -17,31 +17,26 @@ public class Postfix {
         Stack<Character> stack = new Stack<>();
         String output = "";
 
-        for (char c : expression.toCharArray())
-        {
+        for (char c : expression.toCharArray()) {
             if(c == ' ' || c == ',') continue;
+
             else if(isOperator(c)) {
-                while(!stack.isEmpty() && stack.top() != '(' && isLowPrio(stack.top(), c)) {
+                while(!stack.isEmpty() && isLowPrio(stack.top(), c)) {
                     output += stack.pop();
                 }
                 stack.push(c);
             }
 
             // Else if character is an operand
-            else if(isOperand(c)) {
-                output += c;
-            }
+            else if(isOperand(c)) output += c;
 
-            else if (c == '(') {
-                stack.push(c);
-            }
+            else if (c == '(') stack.push(c);
 
             else if(c == ')') {
-                while(!stack.isEmpty() && stack.top() !=  '(') {
-                    output += stack.pop();
-                }
+                while(!stack.isEmpty() && stack.top() != '(') output += stack.pop();
                 stack.pop();
             }
+            //output += stack.pop();
         }
 
         return output;
@@ -60,13 +55,13 @@ public class Postfix {
     @Contract(pure = true)
     private int getOperatorWeight(char op) {
         switch(op) {
-            case '(': return -1;
-            case '+': return  1;
-            case '-': return  1;
-            case '*': return  2;
-            case '/': return  2;
-            case '^': return  3;
-            default: return  -1;
+            case '(': return 0;
+            case '+': return 1;
+            case '-': return 1;
+            case '*': return 2;
+            case '/': return 2;
+            case '^': return 3;
+            default: return -1;
         }
     }
 
@@ -78,7 +73,7 @@ public class Postfix {
     }
 
     public static void main(String[] args) {
-        String test = "2*3+5";
+        String test = "2 * 3 + 5";
         Postfix postfix = new Postfix();
         System.out.printf("%s", postfix.in2Postfix(test));
     }

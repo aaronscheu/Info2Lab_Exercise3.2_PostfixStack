@@ -15,8 +15,9 @@ public class Stack<Item> {
         try {
             return stack.remove();
         } catch (StackUnderflowException e) {
-            System.out.printf("%s", e);
+            System.out.printf("%s\n", e.getMessage());
         }
+        return null;
     }
 
     public void push(Item data) {
@@ -31,6 +32,7 @@ public class Stack<Item> {
         return stack.isEmpty();
     }
 
+    @Override
     public String toString() {
         return stack.toString();
     }

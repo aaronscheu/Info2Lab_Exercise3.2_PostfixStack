@@ -4,7 +4,10 @@
  */
 public class StackUnderflowException extends Exception {
 
-    public void printStackTrace(){
-        System.out.println("Stack is empty!");
+    private static final long serialVersionUID = 1L;
+
+    public StackUnderflowException(String message) {
+        super(message);
     }
+
 }
