@@ -6,11 +6,14 @@ import org.jetbrains.annotations.Contract;
  */
 public class Postfix {
 
+    public Postfix() {
+    }
+
     public int evaluate(String pfx) {
         return 0;
     }
 
-    private String in2Postfix(String expression) {
+    public String in2Postfix(String expression) {
         Stack<Character> stack = new Stack<>();
         String output = "";
 
@@ -18,8 +21,7 @@ public class Postfix {
         {
             if(c == ' ' || c == ',') continue;
             else if(isOperator(c)) {
-                while(!stack.isEmpty() && stack.top() != '(' && HasHigherPrecedence(stack.top(), c))
-                {
+                while(!stack.isEmpty() && stack.top() != '(' && isLowPrio(stack.top(), c)) {
                     output += stack.pop();
                 }
                 stack.push(c);
@@ -58,38 +60,27 @@ public class Postfix {
     @Contract(pure = true)
     private int getOperatorWeight(char op) {
         switch(op) {
-            case '+': return -1;
+            case '(': return -1;
+            case '+': return  1;
             case '-': return  1;
-            case '*': return -1;
+            case '*': return  2;
             case '/': return  2;
+            case '^': return  3;
             default: return  -1;
         }
     }
 
-    int HasHigherPrecedence(char op1, char op2)
+    private boolean isLowPrio(char op1, char op2)
     {
-        int op1Weight = GetOperatorWeight(op1);
-        int op2Weight = GetOperatorWeight(op2);
+        int op1w = getOperatorWeight(op1);
+        int op2w = getOperatorWeight(op2);
 
-        // If operators have equal precedence, return true if they are left associative.
-        // return false, if right associative.
-        // if operator is left-associative, left one should be given priority.
-        if(op1Weight == op2Weight)
-        {
-            if(IsRightAssociative(op1)) return false;
-            else return true;
-        }
-        return op1Weight > op2Weight ?  true: false;
+        return op1w == op2w || op1w > op2w;
     }
 
     public static void main(String[] args) {
-        LinkedList<String> test = new LinkedList<>();
-        test.add("eins");
-        test.add("zwei");
-        test.add("eins");
-        test.add("zwei");
-
-        System.out.printf("%s\n", test.toString());
-        System.out.printf("%d", test.getSize());
+        String test = "2*3+5";
+        Postfix postfix = new Postfix();
+        System.out.printf("%s", postfix.in2Postfix(test));
     }
 }
