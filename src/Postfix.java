@@ -70,8 +70,7 @@ public class Postfix {
         }
     }
 
-    private boolean isLowPrio(char op1, char op2)
-    {
+    private boolean isLowPrio(char op1, char op2) {
         int op1w = getOperatorWeight(op1);
         int op2w = getOperatorWeight(op2);
 

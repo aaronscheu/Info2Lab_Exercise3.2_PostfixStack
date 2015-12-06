@@ -15,6 +15,7 @@ public class LinkedList<Item> {
     public LinkedList() {
         this.first = null;
         this.last = null;
+
         counter = 0;
     }
 
@@ -44,28 +45,27 @@ public class LinkedList<Item> {
         if (first == null) {
             first = new Node(data);
             last = first;
-        } else {
+        }
 
-            Node temp = new Node(data);
-            Node current = first;
+        Node temp = new Node(data);
+        Node current = first;
 
-            if (current != null) {
-                while (current.getNext() != null) {
-                    current = current.getNext();
-                }
-                temp.setPrevious(current);
-                current.setNext(temp);
-                last = temp;
+        if (current != null) {
+            while (current.getNext() != null) {
+                current = current.getNext();
             }
+            temp.setPrevious(current);
+            current.setNext(temp);
+            last = temp;
         }
         incCounter();
     }
 
-    public Item remove() {
+    public Item remove() throws StackUnderflowException{
 
         Node temp = last;
-        if (last == null) {
-            throw new EmptyStackException();
+        if (last == null || counter == 0) {
+            throw new StackUnderflowException();
         } else {
             last = last.getPrevious();
             last.setNext(null);

@@ -8,11 +8,15 @@ public class Stack<Item> {
     private LinkedList<Item> stack;
 
     public Stack() {
-        this.stack = new LinkedList();
+        this.stack = new LinkedList<>();
     }
 
     public Item pop() {
-        return stack.remove();
+        try {
+            return stack.remove();
+        } catch (StackUnderflowException e) {
+            System.out.printf("%s", e);
+        }
     }
 
     public void push(Item data) {
@@ -25,5 +29,9 @@ public class Stack<Item> {
 
     public boolean isEmpty() {
         return stack.isEmpty();
+    }
+
+    public String toString() {
+        return stack.toString();
     }
 }
