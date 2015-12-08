@@ -14,7 +14,7 @@ public class Postfix {
         int op1, op2;
 
         for (char c : pfx.toCharArray()) {
-            if (isOperand(c)) stack.push(Integer.valueOf(c));
+            if (isOperand(c)) stack.push(Character.getNumericValue(c));
             else {
                 op2 = Integer.valueOf(stack.pop());
                 op1 = Integer.valueOf(stack.pop());
@@ -58,7 +58,7 @@ public class Postfix {
                 stack.pop();
             }
         }
-        if (!stack.isEmpty()) output += stack.pop();
+        while (!stack.isEmpty()) output += stack.pop();
         return output;
     }
 
