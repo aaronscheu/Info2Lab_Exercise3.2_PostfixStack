@@ -10,7 +10,30 @@ public class Postfix {
     }
 
     public int evaluate(String pfx) {
-        return 0;
+        Stack<Integer> stack = new Stack<>();
+        int op1, op2;
+
+        for (char c : pfx.toCharArray()) {
+            if (isOperand(c)) stack.push(Integer.valueOf(c));
+            else {
+                op2 = Integer.valueOf(stack.pop());
+                op1 = Integer.valueOf(stack.pop());
+
+                switch (c) {
+                    case '+': stack.push(op1 + op2);
+                        break;
+                    case '-': stack.push(op1 - op2);
+                        break;
+                    case '*': stack.push(op1 * op2);
+                        break;
+                    case '/': stack.push(op1 / op2);
+                        break;
+                    case '^': stack.push((int) (Math.pow(op1, op2)));
+                        break;
+                }
+            }
+        }
+        return Integer.valueOf(stack.pop());
     }
 
     public String in2Postfix(String expression) {
@@ -20,31 +43,28 @@ public class Postfix {
         for (char c : expression.toCharArray()) {
             if(c == ' ' || c == ',') continue;
 
-            else if(isOperator(c)) {
+            if(isOperator(c)) {
                 while(!stack.isEmpty() && isLowPrio(stack.top(), c)) {
                     output += stack.pop();
                 }
                 stack.push(c);
             }
 
-            // Else if character is an operand
             else if(isOperand(c)) output += c;
 
             else if (c == '(') stack.push(c);
-
             else if(c == ')') {
                 while(!stack.isEmpty() && stack.top() != '(') output += stack.pop();
                 stack.pop();
             }
-            //output += stack.pop();
         }
-
+        if (!stack.isEmpty()) output += stack.pop();
         return output;
     }
 
     @Contract(pure = true)
     private boolean isOperator(char c) {
-        return (c == '+' || c == '-' || c == '*' || c == '/') ;
+        return (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') ;
     }
 
     @Contract(pure = true)
@@ -60,7 +80,7 @@ public class Postfix {
             case '-': return 1;
             case '*': return 2;
             case '/': return 2;
-            case '^': return 3;
+            case '^': return 2;
             default: return -1;
         }
     }
@@ -73,8 +93,6 @@ public class Postfix {
     }
 
     public static void main(String[] args) {
-        String test = "2 * 3 + 5";
-        Postfix postfix = new Postfix();
-        System.out.printf("%s", postfix.in2Postfix(test));
+        Test test = new Test();
     }
 }
