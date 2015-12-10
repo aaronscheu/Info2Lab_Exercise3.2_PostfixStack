@@ -1,5 +1,3 @@
-import java.util.EmptyStackException;
-
 /**
  * Created by amaridev on 27/11/15.
  * Package: PACKAGE_NAME for Exercise3.2_.
@@ -47,17 +45,10 @@ public class LinkedList<Item> {
             last = first;
         }
 
-        Node temp = new Node(data);
-        Node current = first;
+        Node temp = new Node(data, last, null);
+        last.setNext(temp);
+        last = temp;
 
-        if (current != null) {
-            while (current.getNext() != null) {
-                current = current.getNext();
-            }
-            temp.setPrevious(current);
-            current.setNext(temp);
-            last = temp;
-        }
         incCounter();
     }
 
